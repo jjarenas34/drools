@@ -1,0 +1,8 @@
+import com.example.rulesengine.domain.DesembolsoRequest;
+
+rule "primera regla que se puede probar"
+    when
+        object: DesembolsoRequest(documento=="hola" && duracion>3);
+    then
+        object.setDesmebolso(true);
+end;
