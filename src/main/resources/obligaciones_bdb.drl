@@ -1,0 +1,20 @@
+import com.example.rulesengine.domain.TarjetaRequest;
+import com.example.rulesengine.domain.DesembolsoRequest;
+
+rule "Dias de mora del capital"
+    when
+        object: TarjetaRequest(ATTCR_DIAS_MORA_CAPITAL >10);
+        obj: DesembolsoRequest();
+    then
+        obj.setDesmebolso(false);
+        obj.setMensajeMora("La obligación terminada en "+object.getTarjeta()+" presenta una mora superior a 10 días, se debe poner al día para poder continuar con la solicitud");
+end;
+
+rule "Dias de mora del interes"
+    when
+        object: DesembolsoRequest(ATTCR_DIAS_MORA_INTERES  >10);
+        obj: DesembolsoRequest();
+    then
+        obj.setDesmebolso(false);
+        obj.setMensajeMora("La obligación terminada en "+object.getTarjeta()+" presenta una mora superior a 10 días, se debe poner al día para poder continuar con la solicitud");
+end;
